@@ -75,7 +75,7 @@ namespace TheGame.AssetManagement
 
         static void ModifyAssetName(string assetPath, string prefix)
         {
-            if (assetPath.Contains("ThirdParty") || assetPath.Contains("Packages"))
+            if (AssetUtils.IsThirdPartyAsset(assetPath))
             {
                 return;
             }

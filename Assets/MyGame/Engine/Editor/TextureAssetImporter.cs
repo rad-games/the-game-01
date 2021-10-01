@@ -7,6 +7,11 @@ namespace TheGame.AssetManagement
     {
         void OnPreprocessTexture()
         {
+            if (AssetUtils.IsThirdPartyAsset(assetPath))
+            {
+                return;
+            }
+
             var guid = AssetDatabase.GUIDFromAssetPath(assetPath);
             var labels = AssetDatabase.GetLabels(guid);
             int index = Array.FindIndex(labels, x => x == AssetLabels.Texture);
@@ -14,7 +19,10 @@ namespace TheGame.AssetManagement
             {
                 // apply import settings only first time
                 TextureImporter textureImporter = (TextureImporter)assetImporter;
-                textureImporter.maxTextureSize = 1024;
+                if (textureImporter.maxTextureSize > 1024)
+                {
+                    textureImporter.maxTextureSize = 1024;
+                }
             }
         }
     }
