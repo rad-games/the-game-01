@@ -49,6 +49,11 @@ namespace TheGame.AssetManagement
         static void ApplyModifications<TType>(string assetPath, string labelName, string prefix)
             where TType : UnityEngine.Object
         {
+            if (AssetUtils.IsThirdPartyAsset(assetPath))
+            {
+                return;
+            }
+
             var obj = AssetDatabase.LoadAssetAtPath<TType>(assetPath);
             AddLabelIfNotExist(obj, labelName);
             ModifyAssetName(assetPath, prefix);
@@ -75,11 +80,6 @@ namespace TheGame.AssetManagement
 
         static void ModifyAssetName(string assetPath, string prefix)
         {
-            if (AssetUtils.IsThirdPartyAsset(assetPath))
-            {
-                return;
-            }
-
             var assetName = Path.GetFileName(assetPath);
             if (assetName.StartsWith(prefix))
             {
